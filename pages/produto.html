@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Produto · SAKURA</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+  .pdp{padding-top:calc(var(--nav-h) + 3rem);padding-bottom:5rem}
+  .pdp-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem}
+  .gallery{display:grid;grid-template-columns:80px 1fr;gap:1rem}
+  .thumbs{display:flex;flex-direction:column;gap:.6rem}
+  .thumbs img{width:80px;height:100px;object-fit:cover;border-radius:10px;cursor:pointer;opacity:.6;transition:.3s}
+  .thumbs img.active,.thumbs img:hover{opacity:1}
+  .main-img{border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:3/4}
+  .main-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+  .main-img:hover img{transform:scale(1.05)}
+  .pdp-info h1{font-size:2.2rem}
+  .pdp-info .price{font-size:1.8rem;margin:1rem 0}
+  .swatches{display:flex;gap:.5rem;margin:1rem 0}
+  .swatch{width:32px;height:32px;border-radius:50%;border:2px solid #fff;box-shadow:var(--shadow-xs);cursor:pointer}
+  .size-grid{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0}
+  .size-grid button{padding:.6rem 1rem;border:1px solid var(--gray-100);border-radius:8px;background:#fff;transition:.3s}
+  .size-grid button.active{background:var(--gray-900);color:#fff;border-color:var(--gray-900)}
+  .desc-tabs{margin-top:2rem;border-top:1px solid var(--gray-100);padding-top:1.5rem}
+  .desc-tabs details{border-bottom:1px solid var(--gray-100);padding:1rem 0}
+  .desc-tabs summary{cursor:pointer;font-family:var(--font-serif);font-size:1.1rem}
+  @media(max-width:768px){.pdp-grid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.thumbs{flex-direction:row;overflow-x:auto}}
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+<img class="backdrop-tree" src="../assets/img/sakura-tree.png" alt=""/>
+<canvas id="petals-canvas"></canvas>
+
+<header class="nav scrolled">
+  <div class="container nav-inner">
+    <a href="../index.html" class="brand"><span class="brand-mark"></span>SAKURA</a>
+    <a href="../index.html" class="btn btn-ghost">← Voltar à loja</a>
+  </div>
+</header>
+
+<section class="pdp">
+  <div class="container pdp-grid">
+    <div class="gallery">
+      <div class="thumbs">
+        <img class="active" src="../assets/img/product-1.jpg" alt=""/>
+        <img src="../assets/img/product-3.jpg" alt=""/>
+        <img src="../assets/img/product-5.jpg" alt=""/>
+        <img src="../assets/img/product-6.jpg" alt=""/>
+      </div>
+      <div class="main-img"><img id="mainImg" src="../assets/img/product-1.jpg" alt=""/></div>
+    </div>
+    <div class="pdp-info">
+      <span class="eyebrow">Signature · Primavera 2025</span>
+      <h1>Vestido Seda Blossom</h1>
+      <div class="stars" style="color:#e5b34e">★★★★★ <span style="color:var(--gray-500);font-size:.85rem">(128 avaliações)</span></div>
+      <div class="price"><strong>R$ 589,00</strong> <span style="color:var(--gray-500);text-decoration:line-through;font-size:1rem">R$ 749,00</span></div>
+      <p style="color:var(--gray-500)">Vestido em seda pura com caimento fluido, inspirado nas pétalas de cerejeira. Ideal para ocasiões especiais.</p>
+
+      <h4 style="margin-top:1.5rem;font-family:var(--font-sans);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase">Cor: Rosa Sakura</h4>
+      <div class="swatches">
+        <span class="swatch" style="background:#F7B8C9"></span>
+        <span class="swatch" style="background:#FFD8E5"></span>
+        <span class="swatch" style="background:#111"></span>
+      </div>
+
+      <h4 style="font-family:var(--font-sans);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase">Tamanho</h4>
+      <div class="size-grid">
+        <button>PP</button><button class="active">P</button><button>M</button><button>G</button><button>GG</button>
+      </div>
+
+      <div class="stock ok" style="margin:1rem 0">✓ Disponível — Últimas 12 unidades</div>
+
+      <div style="display:flex;gap:.6rem">
+        <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="parent.location.href='../index.html'">Comprar agora</button>
+        <button class="btn btn-ghost">♡</button>
+      </div>
+
+      <div class="desc-tabs">
+        <details open><summary>Descrição</summary><p style="color:var(--gray-500);margin-top:.6rem">Peça exclusiva confeccionada em seda 100% natural, com acabamento premium e detalhes bordados à mão.</p></details>
+        <details><summary>Material & Composição</summary><p style="color:var(--gray-500);margin-top:.6rem">100% Seda pura · Forro em cetim.</p></details>
+        <details><summary>Guia de Lavagem</summary><p style="color:var(--gray-500);margin-top:.6rem">Lavagem à seco recomendada. Não torcer, secar à sombra.</p></details>
+        <details><summary>Guia de Tamanhos</summary><p style="color:var(--gray-500);margin-top:.6rem">PP (34-36) · P (38) · M (40) · G (42) · GG (44).</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.thumbs img').forEach(t=>{
+    t.addEventListener('click',()=>{
+      document.querySelectorAll('.thumbs img').forEach(i=>i.classList.remove('active'));
+      t.classList.add('active');
+      document.getElementById('mainImg').src = t.src;
+    });
+  });
+  document.querySelectorAll('.size-grid button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('.size-grid button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
